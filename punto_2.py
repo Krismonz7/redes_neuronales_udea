@@ -14,7 +14,7 @@ model = models.Sequential()
 model.add(layers.Dense(512,activation='relu', input_shape=(28*28,)))
 model.add(layers.Dense(10,activation='softmax'))
 
-model.compile(optimizer='adam',
+model.compile(optimizer='sgd',
 loss='categorical_crossentropy',
 metrics=['accuracy', 'Precision'])
 x_train = train_data_df
