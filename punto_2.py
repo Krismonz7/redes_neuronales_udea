@@ -14,7 +14,7 @@ model = models.Sequential()
 model.add(layers.Dense(512,activation='relu', input_shape=(28*28,)))
 model.add(layers.Dense(10,activation='softmax'))
 
-model.compile(optimizer='rmsprop',
+model.compile(optimizer='adadelta',
 loss='categorical_crossentropy',
 metrics=['accuracy', 'Precision'])
 x_train = train_data_df
@@ -37,7 +37,7 @@ pd.DataFrame({"loss":history.history["loss"] ,
 
 plt.grid(True)
 plt.xlabel("Epoch")
-plt.ylabel("Y - label")
+plt.ylabel("Y - results")
 plt.show()
 print("\n\n Evaluacion comparada con los test: \n\n")
 model.evaluate(x_test,y_test)
