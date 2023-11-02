@@ -11,7 +11,7 @@ train_data_flattened= train_data.reshape(train_data.shape[0],-1)
 train_data_df = pd.DataFrame(train_data_flattened)
 
 model = models.Sequential()
-model.add(layers.Dense(512,activation='relu', input_shape=(28*28,)))
+model.add(layers.Dense(1000,activation='relu', input_shape=(28*28,)))
 model.add(layers.Dense(10,activation='softmax'))
 
 model.compile(optimizer='nadam',
@@ -29,8 +29,7 @@ y_test = to_categorical(test_labels)
 from keras.callbacks import TensorBoard
 tensorboardDenso = TensorBoard(log_dir="logs/denso")
 
-history = model.fit(x_train,y_train,epochs=20,callbacks=[tensorboardDenso],
-                    
+history = model.fit(x_train,y_train,epochs=20,callbacks=[tensorboardDenso],      
                     batch_size=250,validation_data=(x_test,y_test))
 pd.DataFrame({"loss":history.history["loss"] ,
               "val_loss":history.history["val_loss"]}).plot(figsize=(10,7))

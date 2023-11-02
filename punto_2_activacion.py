@@ -11,7 +11,7 @@ train_data_flattened= train_data.reshape(train_data.shape[0],-1)
 train_data_df = pd.DataFrame(train_data_flattened)
 
 model = models.Sequential()
-model.add(layers.Dense(512,activation='relu', input_shape=(28*28,)))
+model.add(layers.Dense(557,activation='PReLU', input_shape=(28*28,)))
 model.add(layers.Dense(10,activation='softmax'))
 
 model.compile(optimizer='nadam',
