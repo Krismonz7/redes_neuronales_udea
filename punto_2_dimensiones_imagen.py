@@ -16,7 +16,7 @@ import cv2
 
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 # Tamaño al que deseas redimensionar las imágenes
-new_size = (100, 100)
+new_size = (10, 10)
 
 # Crear listas vacías para almacenar las nuevas imágenes
 new_train_images = []
@@ -43,7 +43,7 @@ print("Shape of resized training images:", new_train_images.shape)
 print("Shape of resized testing images:", new_test_images.shape)
 
 model = models.Sequential()
-model.add(layers.Dense(557,activation='PReLU', input_shape=(100*100,)))
+model.add(layers.Dense(557,activation='PReLU', input_shape=(10*10,)))
 model.add(layers.Dense(10,activation='softmax'))
 
 model.compile(optimizer='nadam',
@@ -52,7 +52,7 @@ metrics=['accuracy', 'Precision'])
 x_train = new_train_images
 x_train = x_train.astype("float32")/255
 
-x_test = new_test_images.reshape((10000,100*100))
+x_test = new_test_images.reshape((10000,10*10))
 
 x_test = x_test.astype("float32")/255
 #Aplanamos los arreglos:
