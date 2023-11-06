@@ -16,7 +16,7 @@ import cv2
 
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 # Tamaño al que deseas redimensionar las imágenes
-new_size = (28, 28)
+new_size = (100, 100)
 
 # Crear listas vacías para almacenar las nuevas imágenes
 new_train_images = []
@@ -43,7 +43,7 @@ print("Shape of resized training images:", new_train_images.shape)
 print("Shape of resized testing images:", new_test_images.shape)
 
 model = models.Sequential()
-model.add(layers.Dense(557,activation='PReLU', input_shape=(28*28,)))
+model.add(layers.Dense(557,activation='PReLU', input_shape=(100*100,)))
 model.add(layers.Dense(10,activation='softmax'))
 
 model.compile(optimizer='nadam',
@@ -52,7 +52,7 @@ metrics=['accuracy', 'Precision'])
 x_train = new_train_images
 x_train = x_train.astype("float32")/255
 
-x_test = new_test_images.reshape((10000,28*28))
+x_test = new_test_images.reshape((10000,100*100))
 
 x_test = x_test.astype("float32")/255
 #Aplanamos los arreglos:
@@ -65,7 +65,7 @@ from keras.callbacks import TensorBoard
 
 tensorboardDenso = TensorBoard(log_dir="logs/denso")
 history = model.fit(x_train,y_train,epochs=20,callbacks=[tensorboardDenso],
-                    batch_size=256,validation_data=(x_test,y_test))
+                    batch_size=250,validation_data=(x_test,y_test))
 
 pd.DataFrame({"loss":history.history["loss"] ,
               "val_loss":history.history["val_loss"]}).plot(figsize=(10,7))
