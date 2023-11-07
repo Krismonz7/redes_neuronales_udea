@@ -10,13 +10,12 @@ import pandas as pd
 model = models.Sequential()
 # Capa convolucional
 model.add(layers.Conv2D(10, kernel_size=(3, 3), activation="relu", input_shape=(28, 28, 1)))
-
+model.add(layers.BatchNormalization())
 
 # Capa de maxpooling
 model.add(layers.MaxPool2D(pool_size=(2, 2)))
 # Capa de aplanamiento
 model.add(layers.Flatten())
-
 # Capas densas
 model.add(layers.Dense(557, activation='PReLU'))
 model.add(layers.Dropout(0.5))
