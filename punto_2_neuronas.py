@@ -19,6 +19,7 @@ model.add(layers.Flatten())
 
 # Capas densas
 model.add(layers.Dense(557, activation='PReLU'))
+model.add(layers.Dropout(0.5))
 model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='nadam',
