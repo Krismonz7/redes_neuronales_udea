@@ -1,30 +1,41 @@
 import numpy as np
-from keras import layers,models
+from keras import layers, models
 from keras.utils import to_categorical
 from keras.datasets import mnist
 import matplotlib.pyplot as plt
-
 import pandas as pd
-(train_data,train_labels),(test_data,test_labels) = mnist.load_data()
-train_data_flattened= train_data.reshape(train_data.shape[0],-1)
-print(train_data.shape[0])
 
-train_data_df = pd.DataFrame(train_data_flattened)
+(train_data, train_labels), (test_data, test_labels) = mnist.load_data()
 
 model = models.Sequential()
-model.add(layers.Dense(557,activation='PReLU', input_shape=(28*28,)))
-model.add(layers.Dense(10,activation='softmax'))
+# Capa convolucional
+model.add(layers.Conv2D(10, kernel_size=(3, 3), activation="relu", input_shape=(28, 28, 1)))
+
+
+# Capa de maxpooling
+model.add(layers.MaxPool2D(pool_size=(2, 2)))
+# Capa de aplanamiento
+model.add(layers.Flatten())
+
+# Capas densas
+model.add(layers.Dense(557, activation='PReLU'))
+model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='nadam',
-loss='mean_squared_error',
-metrics=['accuracy', 'Precision'])
-x_train = train_data_df
-x_train = x_train.astype("float32")/255
-x_test = test_data.reshape((10000,28*28))
-x_test = x_test.astype("float32")/255
-y_train = to_categorical(train_labels)
+              loss='mean_squared_error',
+              metrics=['accuracy', 'Precision'])
 
+x_train = train_data.reshape(train_data.shape[0], 28, 28, 1)
+x_train = x_train.astype("float32") / 255
+
+x_test = test_data.reshape(test_data.shape[0], 28, 28, 1)
+x_test = x_test.astype("float32") / 255
+
+y_train = to_categorical(train_labels)
 y_test = to_categorical(test_labels)
+
+# Resto del código...
+
 
 from keras.callbacks import TensorBoard
 tensorboardDenso = TensorBoard(log_dir="logs/denso")
